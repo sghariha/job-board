@@ -27,7 +27,15 @@ class LoginPage extends Component {
             password: '',
             userType: 'Job Seeker',
             invalidEmail: false,
-            invalidPassword: false
+            invalidPassword: false,
+            registerEmail: '',
+            registerFirstName: '', 
+            registerLastName: '', 
+            registerDOB: '', 
+            registerPassword: '', 
+            registerConfirmPassword: '', 
+            invalidRegisterEmail: false, 
+            invalidRegisterPassword: false
         }
     }
 
@@ -41,6 +49,30 @@ class LoginPage extends Component {
 
     updatePasswordState(event) {
         this.setState({password: event.target.value});     
+    };
+
+    updateRegisterEmailState(event) {
+        this.setState({registerEmail: event.target.value});   
+    };
+
+    updateRegisterFirstNameState(event) {
+        this.setState({registerFirstName: event.target.value});   
+    };
+
+    updateRegisterLastNameState(event) {
+        this.setState({registerLastName: event.target.value});   
+    };
+
+    updateRegisterDOBState(event) {
+        this.setState({registerDOB: event.target.value});   
+    };
+
+    updateRegisterPasswordState(event) {
+        this.setState({registerPassword: event.target.value});     
+    };
+
+    updateRegisterConfirmPasswordState(event) {
+        this.setState({registerConfirmPassword: event.target.value});     
     };
 
     handleLogin() {
@@ -97,7 +129,20 @@ class LoginPage extends Component {
                     <Tab eventKey="register" title="Register">
                         <Container className="login-page-form-container">
                             <RegisterForm
-
+                                updateRegisterEmailState={this.updateRegisterEmailState.bind(this)} 
+                                updateRegisterFirstNameState={this.updateRegisterFirstNameState.bind(this)} 
+                                updateRegisterLastNameState={this.updateRegisterLastNameState.bind(this)} 
+                                updateRegisterDOBState={this.updateRegisterDOBState.bind(this)} 
+                                updateRegisterPasswordState={this.updateRegisterPasswordState.bind(this)} 
+                                updateRegisterConfirmPasswordState={this.updateRegisterConfirmPasswordState.bind(this)} 
+                                registerEmail={this.state.registerEmail} 
+                                registerFirstName={this.state.registerFirstName} 
+                                registerLastName={this.state.registerLastName} 
+                                registerDOB={this.state.registerDOB} 
+                                registerPassword={this.state.registerPassword} 
+                                registerConfirmPassword={this.state.registerConfirmPassword} 
+                                invalidRegisterEmail={this.state.invalidRegisterEmail} 
+                                invalidRegisterPassword={this.state.invalidRegisterPassword} 
                             />
                         </Container>
                     </Tab>

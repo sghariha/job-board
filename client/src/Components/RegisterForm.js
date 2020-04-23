@@ -7,6 +7,11 @@ import '../Stylesheets/LoginPage.css';
 
 class RegisterForm extends Component {
     render() {
+        let nonmatchingPasswords = null;
+        if (this.props.registerConfirmPassword !=== '' && this.props.registerPassword !== this.props.registerConfirmPassword) {
+            nonmatchingPasswords = <Form.Text>Passwords do not match</Form.Text>
+        }
+
         return (
             <Row className="justify-content-lg-center">
                 <Col md></Col>
@@ -41,8 +46,9 @@ class RegisterForm extends Component {
                             <Form.Label>Confirm Password</Form.Label>
                             <Form.Control type="password" value={this.props.registerConfirmPassword} onChange={this.props.updateRegisterConfirmPasswordState}/>
                         </Form.Group>
+                        {nonmatchingPasswords}
     
-                        <Button variant="primary" onClick={this.props.handleLogin}>Login</Button>
+                        <Button variant="primary">Login</Button>
                     </Form>
                 </Col>
                 <Col md></Col>
