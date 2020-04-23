@@ -69,7 +69,7 @@ public class SeekerUserController {
             return;
         }
         SeekerUser user = this.seekerUserRepository.findById(id).get();
-        user = seekerUser;
+        
         this.seekerUserRepository.save(user);
     }
 
