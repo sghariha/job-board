@@ -64,7 +64,7 @@ class LoginPage extends Component {
     };
 
     updateRegisterDOBState(event) {
-        this.setState({registerDOB: event.target.value});   
+        this.setState({registerDOB: event.target.value});
     };
 
     updateRegisterPasswordState(event) {
@@ -101,6 +101,10 @@ class LoginPage extends Component {
                 }
             }
         );
+    }
+
+    handleRegister() {
+        
     }
 
     render() {

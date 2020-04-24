@@ -11,15 +11,15 @@ class LoginForm extends Component {
         var email = this.props.email;
         let emailHint = null;
         if (email !== null && email !== "" && (!email.includes("@") || !email.includes("."))) {
-            emailHint = <Form.Text>Please enter a valid email</Form.Text>;
+            emailHint = <Form.Text className="help-msg">Please enter a valid email</Form.Text>;
         }
 
         let invalidCredentials = null;
         if (this.props.invalidEmail) {
-            invalidCredentials = <Form.Text>Email address not recognized</Form.Text>;
+            invalidCredentials = <Form.Text className="help-msg">Email address not recognized</Form.Text>;
         }
         else if (this.props.invalidPassword) {
-            invalidCredentials = <Form.Text>Incorrect password</Form.Text>;
+            invalidCredentials = <Form.Text className="help-msg">Incorrect password</Form.Text>;
         }
 
         return (
