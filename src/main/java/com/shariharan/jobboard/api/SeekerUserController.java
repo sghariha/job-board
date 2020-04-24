@@ -43,7 +43,7 @@ public class SeekerUserController {
         return ResponseEntity.ok().body(this.seekerUserRepository.findAll());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<SeekerUser> getUserById(@RequestHeader("Authorization") String token, @PathVariable String id) {
         try {
             TokenUtil.decodeToken(token);
@@ -55,12 +55,18 @@ public class SeekerUserController {
         return ResponseEntity.ok().body(user);
     }
 
+    @GetMapping("/userExistsByEmail/{email}")
+    public ResponseEntity<Boolean> checkUserExistsByEmail(@PathVariable String email) {
+        int users = this.seekerUserRepository.findByEmail(email).size();
+        return ResponseEntity.ok().body(users > 0 ? true : false);
+    }
+
     @PostMapping("/new")
     public void addNewUser(@RequestBody SeekerUser seekerUser) {
         this.seekerUserRepository.insert(seekerUser);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/id/{id}")
     public void updateUser(@RequestHeader("Authorization") String token, @PathVariable String id, @RequestBody SeekerUser seekerUser) {
         try {
             TokenUtil.decodeToken(token);
@@ -73,7 +79,7 @@ public class SeekerUserController {
         this.seekerUserRepository.save(user);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/id/{id}")
     public void deleteUserById(@PathVariable String id) {
         this.seekerUserRepository.deleteById(id);
     }

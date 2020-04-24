@@ -12,43 +12,49 @@ class RegisterForm extends Component {
             nonmatchingPasswords = <Form.Text className="help-msg">Passwords do not match</Form.Text>
         }
 
+        let userAlreadyExists = null;
+        if (this.props.invalidRegisterEmail === true) {
+            userAlreadyExists = <Form.Text className="help-msg">User with this email already exists</Form.Text>
+        }
+
         return (
             <Row className="justify-content-lg-center">
                 <Col md></Col>
                 <Col md>
                     <Form className="register-form">
-                        <Form.Group controlId="formBasicEmail">
+                        {userAlreadyExists}
+                        <Form.Group>
                             <Form.Label>Email address</Form.Label>
                             <Form.Control type="email" value={this.props.registerEmail} onChange={this.props.updateRegisterEmailState} />
                         </Form.Group>
 
-                        <Form.Group controlId="formPlainTextName">
+                        <Form.Group>
                             <Form.Label>First name</Form.Label>
                             <Form.Control type="name" value={this.props.registerFirstName} onChange={this.props.updateRegisterFirstNameState} />
                         </Form.Group>
 
-                        <Form.Group controlId="formPlainTextName">
+                        <Form.Group>
                             <Form.Label>Last name</Form.Label>
                             <Form.Control type="name" value={this.props.registerLastName} onChange={this.props.updateRegisterLastNameState} />
                         </Form.Group>
 
-                        <Form.Group controlId="formPlainTextName">
+                        <Form.Group>
                             <Form.Label>Date of birth</Form.Label>
                             <Form.Control type="date" value={this.props.registerDOB} onChange={this.props.updateRegisterDOBState} />
                         </Form.Group>
     
-                        <Form.Group controlId="formBasicPassword">
+                        <Form.Group>
                             <Form.Label>Password</Form.Label>
                             <Form.Control type="password" value={this.props.registerPassword} onChange={this.props.updateRegisterPasswordState}/>
                         </Form.Group>
                         
-                        <Form.Group controlId="formBasicPassword">
+                        <Form.Group>
                             <Form.Label>Confirm Password</Form.Label>
                             <Form.Control type="password" value={this.props.registerConfirmPassword} onChange={this.props.updateRegisterConfirmPasswordState}/>
                             {nonmatchingPasswords}
                         </Form.Group>
     
-                        <Button variant="primary">Register</Button>
+        <Button variant="primary" onClick={this.props.handleRegister}>Register</Button>
                     </Form>
                 </Col>
                 <Col md></Col>

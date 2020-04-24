@@ -8,7 +8,7 @@ import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 import { Redirect } from 'react-router-dom';
 import Cookies from 'js-cookie';
-import {CheckCredentials} from '../Utilities/Auth';
+import {CheckCredentials, CheckIfEmailExists, RegisterSeekerUser} from '../Utilities/Auth';
 
 function GenericHeader(props) {
     return (
@@ -104,7 +104,30 @@ class LoginPage extends Component {
     }
 
     handleRegister() {
-        
+        CheckIfEmailExists(this.state.registerEmail)
+        .then(
+            (data) => {
+                this.setState({
+                    invalidRegisterEmail: data === true
+                });
+                if (data == false) {
+                    RegisterSeekerUser(
+                        this.state.registerEmail,
+                        this.state.registerPassword,
+                        this.state.registerFirstName,
+                        this.state.registerLastName,
+                        this.state.registerDOB
+                    )
+                    .then(
+                        () => {
+                            this.setState({
+                                redirectToHome: true
+                            });
+                        }
+                    );
+                }
+            }
+        );
     }
 
     render() {
@@ -147,6 +170,7 @@ class LoginPage extends Component {
                                 registerConfirmPassword={this.state.registerConfirmPassword} 
                                 invalidRegisterEmail={this.state.invalidRegisterEmail} 
                                 invalidRegisterPassword={this.state.invalidRegisterPassword} 
+                                handleRegister={this.handleRegister.bind(this)}
                             />
                         </Container>
                     </Tab>

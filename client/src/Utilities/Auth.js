@@ -22,4 +22,37 @@ async function CheckCredentials(email, password) {
     return jsonResponse;
 }
 
-export {CheckAuth, CheckCredentials};
+async function CheckIfEmailExists(email) {
+    if (email === '') {
+        email = '000000'
+    }
+    let response = await fetch('/api/seekerUsers/userExistsByEmail/' + email, 
+    {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    let jsonResponse = await response.json();
+    return jsonResponse;
+}
+
+async function RegisterSeekerUser(email, password, firstName, lastName, dob) {
+    const data = {
+        'email': email,
+        'password': password,
+        'firstName': firstName,
+        'lastName': lastName,
+        'dob': dob
+    };
+    await fetch('/api/seekerUsers/new',
+    {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    });
+}
+
+export {CheckAuth, CheckCredentials, CheckIfEmailExists, RegisterSeekerUser};
