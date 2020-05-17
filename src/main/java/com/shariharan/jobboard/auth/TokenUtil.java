@@ -14,8 +14,8 @@ public class TokenUtil {
 
         StringBuilder token = new StringBuilder();
 
-        token.append(Integer.toHexString(email.length()) + "\n");
-        token.append(Integer.toHexString(id.length()) + "\n");
+        token.append(Integer.toHexString(email.length()) + "-");
+        token.append(Integer.toHexString(id.length()) + "-");
 
         for (int i = 0; i < email.length(); i++) {
             char converted = email.charAt(i);
@@ -43,7 +43,7 @@ public class TokenUtil {
         String userType, email, id;
         int i = 0;
 
-        String[] lines = token.split("\\\\n");
+        String[] lines = token.split("-");
         System.out.println(lines.length);
 
         if (lines.length != 3) {

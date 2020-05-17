@@ -7,6 +7,12 @@ import '../Stylesheets/LoginPage.css';
 
 class RegisterForm extends Component {
     render() {
+        var email = this.props.registerEmail;
+        let emailHint = null;
+        if (email !== null && email !== "" && (!email.includes("@") || !email.includes("."))) {
+            emailHint = <Form.Text className="help-msg">Please enter a valid email</Form.Text>;
+        }
+
         let nonmatchingPasswords = null;
         if (this.props.registerConfirmPassword !== '' && this.props.registerPassword !== this.props.registerConfirmPassword) {
             nonmatchingPasswords = <Form.Text className="help-msg">Passwords do not match</Form.Text>
@@ -26,6 +32,7 @@ class RegisterForm extends Component {
                         <Form.Group>
                             <Form.Label>Email address</Form.Label>
                             <Form.Control type="email" value={this.props.registerEmail} onChange={this.props.updateRegisterEmailState} />
+                            {emailHint}
                         </Form.Group>
 
                         <Form.Group>
@@ -54,7 +61,7 @@ class RegisterForm extends Component {
                             {nonmatchingPasswords}
                         </Form.Group>
     
-        <Button variant="primary" onClick={this.props.handleRegister}>Register</Button>
+                        <Button variant="outline-info" onClick={this.props.handleRegister}>Register</Button>
                     </Form>
                 </Col>
                 <Col md></Col>

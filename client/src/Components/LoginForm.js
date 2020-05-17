@@ -47,7 +47,7 @@ class LoginForm extends Component {
                         </Form.Control>
                     </Form.Group>
 
-                    <Button variant="primary" onClick={this.props.handleLogin}>Login</Button>
+                    <Button variant="outline-info" onClick={this.props.handleLogin}>Login</Button>
                 </Form>
             </Col>
             <Col md></Col>

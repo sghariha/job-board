@@ -13,7 +13,7 @@ import {CheckCredentials, CheckIfEmailExists, RegisterSeekerUser} from '../Utili
 function GenericHeader(props) {
     return (
         <Navbar bg="dark" variant="dark">
-            <Navbar.Brand >SimpleApply</Navbar.Brand>
+            <Navbar.Brand>SimpleApply</Navbar.Brand>
         </Navbar>
     );
 }
@@ -35,7 +35,7 @@ class LoginPage extends Component {
             registerPassword: '', 
             registerConfirmPassword: '', 
             invalidRegisterEmail: false, 
-            invalidRegisterPassword: false
+            missingFields: true
         }
     }
 
@@ -75,59 +75,66 @@ class LoginPage extends Component {
         this.setState({registerConfirmPassword: event.target.value});     
     };
 
-    handleLogin() {
-        CheckCredentials(this.state.email, this.state.password)
-        .then(
-            (data) => {
-                console.log('token is ' + data.token);
-                if (data.token !== null) {
-                    Cookies.set('token', data.token);
-                    this.setState(() => ({
-                        redirectToHome: true
-                    }));
-                    console.log(this.state.redirectToHome);
-                }
-                else if (data.message === 'Invalid email') {
-                    this.setState(() => ({
-                        invalidEmail: true, 
-                        invalidPassword: false
-                    }));
-                }
-                else if (data.message === 'Invalid password') {
-                    this.setState(() => ({
-                        invalidEmail: false, 
-                        invalidPassword: true
-                    }));
-                }
-            }
-        );
+    async handleLogin() {
+        let data = await CheckCredentials(this.state.email, this.state.password);
+        if (data.token !== null) {
+            Cookies.set('token', data.token);
+            this.setState(() => ({
+                redirectToHome: true
+            }));
+            console.log(this.state.redirectToHome);
+        }
+        else if (data.message === 'Invalid email') {
+            this.setState(() => ({
+                invalidEmail: true, 
+                invalidPassword: false
+            }));
+        }
+        else if (data.message === 'Invalid password') {
+            this.setState(() => ({
+                invalidEmail: false, 
+                invalidPassword: true
+            }));
+        }
     }
 
-    handleRegister() {
-        CheckIfEmailExists(this.state.registerEmail)
-        .then(
-            (data) => {
-                this.setState({
-                    invalidRegisterEmail: data === true
-                });
-                if (data == false) {
-                    RegisterSeekerUser(
-                        this.state.registerEmail,
-                        this.state.registerPassword,
-                        this.state.registerFirstName,
-                        this.state.registerLastName,
-                        this.state.registerDOB
-                    )
-                    .then(
-                        () => {
-                            this.setState({
-                                redirectToHome: true
-                            });
-                        }
-                    );
-                }
-            }
-        );
+    async handleRegister() {
+        if (
+            this.state.registerEmail === '' || 
+            this.state.registerPassword === '' || 
+            this.state.registerConfirmPassword === '' || 
+            this.state.registerFirstName === '' || 
+            this.state.registerLastName === '' || 
+            this.state.registerDOB === ''
+        ) {
+            alert('Please fill out all fields');
+            return;
+        }
+
+        if (this.state.registerPassword !== this.state.registerConfirmPassword) {
+            return;
+        }
+
+        if (this.state.registerPassword !== this.state.registerConfirmPassword) {
+            return;
+        }
+
+        let data = await CheckIfEmailExists(this.state.registerEmail);
+        this.setState({
+            invalidRegisterEmail: data === true
+        });
+        if (data === false) {
+            await RegisterSeekerUser(
+                this.state.registerEmail,
+                this.state.registerPassword,
+                this.state.registerFirstName,
+                this.state.registerLastName,
+                this.state.registerDOB
+            )
+            this.setState({
+                redirectToHome: true
+            });
+        }
     }
 
     render() {
